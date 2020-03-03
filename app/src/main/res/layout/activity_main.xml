@@ -35,6 +35,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="News Page"/>
+    <Button
+        android:id="@+id/storage1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Storage(part 1) "/>
 
 
 </LinearLayout>
