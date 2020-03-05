@@ -1,0 +1,3 @@
+rootProject.name='LoginModule'
+include ':app'
+include ':app:login'
