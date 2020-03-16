@@ -1,0 +1,3 @@
+rootProject.name='FragmentAssesment'
+include ':app'
+include ':app:fragmentlifecycle'
