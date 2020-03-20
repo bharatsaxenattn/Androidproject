@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainLayout"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnSetImage"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Set Background Using Glide"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"/>
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="download By HTTPP Url Connection"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"/>
+    <Button
+        android:id="@+id/downloadRetrofit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Download By retrofit"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"/>
+
+
+
+</LinearLayout>
