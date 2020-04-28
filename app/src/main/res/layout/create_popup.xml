@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_main"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_10dp"
+        android:background="@color/baseBackground"
+        android:clipChildren="true"
+        android:layout_gravity="center"
+        app:cardCornerRadius="@dimen/_10dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/baseBackground"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold|italic"
+        android:textSize="@dimen/_20dp"
+        android:layout_marginTop="5dp"
+        android:text="New Album"
+        android:gravity="center"/>
+    <EditText
+        android:id="@+id/edt_title"
+        android:layout_width="@dimen/_300dp"
+        android:layout_height="@dimen/_40dp"
+        android:layout_margin="@dimen/_20dp"
+        android:hint="title"
+        android:padding="8dp"
+        android:gravity="center"
+        android:textColor="#000"
+        android:enabled="true"
+        android:focusable="true"
+        android:background="@drawable/white_background_button"
+        />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height=".5dp"
+            android:background="#000"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:background="@android:color/transparent"
+        android:layout_weight="1"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#000" />
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:background="@android:color/transparent"
+        android:layout_weight="1"/>
+    </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+</FrameLayout>

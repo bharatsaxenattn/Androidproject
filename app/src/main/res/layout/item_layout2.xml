@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="album"
+            type="com.example.album.AlbumItems2" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="@dimen/_10dp"
+        android:clipChildren="true"
+        android:background="@color/baseBackground"
+        app:cardUseCompatPadding="false"
+        android:elevation="8dp">
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:background="@color/baseBackground"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/mainAlbumImage"
+                android:layout_width="@dimen/_200dp"
+                android:layout_height="250dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/image_view_corner"
+                bind:album1="@{album.imgUrl}"
+                ></ImageView>
+
+            <TextView
+                android:id="@+id/txtName"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@color/transparent_black"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_alignRight="@id/mainAlbumImage"
+                android:layout_alignBottom="@id/mainAlbumImage"
+                android:text="@{album.name}"
+
+                />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/grid2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/_10dp"
+        android:paddingLeft="@dimen/_100dp"
+        android:src="@drawable/ic_collections_black_24dp"/>
+    <ImageView
+        android:id="@+id/grid4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/_10dp"
+        android:paddingRight="@dimen/_100dp"
+        android:src="@drawable/grid_24dp"/>
+  <!--  <ImageView
+        android:id="@+id/timeline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/_10dp"
+        android:paddingRight="@dimen/_100dp"
+        android:src="@drawable/grid_24dp"/>-->
+</LinearLayout>

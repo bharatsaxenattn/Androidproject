@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/main_screen"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/mainimage">
+
+
+        <EditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/_200dp"
+            android:layout_marginRight="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:hint="@string/email"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:paddingLeft="5dp"
+            android:textStyle="italic"
+            android:backgroundTint="@color/white"
+            android:drawablePadding="@dimen/_10dp"
+            android:drawableLeft="@drawable/ic_email_white_24dp"
+
+            />
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="@dimen/_20dp"
+            android:hint="@string/password"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            android:backgroundTint="@color/white"
+            android:paddingLeft="5dp"
+            android:drawablePadding="@dimen/_10dp"
+            android:drawableLeft="@drawable/ic_lock_open_white_24dp"
+
+            />
+        <Button
+            android:id="@+id/btn_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginTop="@dimen/_60dp"
+            android:layout_marginLeft="@dimen/_30dp"
+            android:layout_marginRight="@dimen/_30dp"
+            android:text="@string/signin"
+            android:textSize="@dimen/_20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:textStyle="italic"
+            />
+        <TextView
+            android:id="@+id/signupTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/signup"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/_30dp"/>
+
+    </LinearLayout>
+</FrameLayout>
