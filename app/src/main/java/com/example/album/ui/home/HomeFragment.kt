@@ -1,33 +1,24 @@
 package com.example.album.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.album.Adapters.ImageAdapter
-import com.example.album.Adapters.MyAdapter
+import com.example.album.adapters.MyAdapter
 import com.example.album.AlbumItems2
-import com.example.album.Fragments.AddCategoryDialog
-import com.example.album.ImageData
-import com.example.album.POJO.CategoryData
-import com.example.album.POJO.ProfileData
+import com.example.album.fragments.AddCategoryDialog
 import com.example.album.R
 import com.example.album.firebase.FirebaseSource
-import com.example.album.ui.Image.ImageViewModel
 import com.example.album.ui.TimelineFragment
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(), View.OnClickListener {
 

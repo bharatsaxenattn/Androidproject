@@ -1,7 +1,6 @@
-package  com.example.album.Fragments
+package  com.example.album.fragments
 
 import android.Manifest
-import android.R.attr.password
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
@@ -16,14 +15,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
-import com.example.album.Fragments.Login
 import com.example.album.GalleryActivity
 import com.example.album.POJO.ProfileData
 import com.example.album.R
 
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
@@ -31,7 +26,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 
 
 class Signup : Fragment(), View.OnClickListener {

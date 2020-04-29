@@ -1,7 +1,6 @@
-package com.example.album.Adapters
+package com.example.album.adapters
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,14 +31,16 @@ class ImageAdapter(var arrayList: List<ImageData>,var manager:FragmentManager): 
 
     override fun onBindViewHolder(holder: ImageAdapter.ViewHolder, position: Int) {
        holder.binding.image=arrayList.get(position)
-     //   Log.v("inside adapter=",holder.binding.image.toString())
         holder.binding.executePendingBindings()
         holder.binding.mainAlbumImage.setOnClickListener(View.OnClickListener {
-         //   Log.v("Key in adapter:",holder.binding.image.key)
+          /*creating instance of single image fragment */
             var a=SoloImage.newInstance()
-            var bundle:Bundle= Bundle()
+            /*passsing object through bundle*/
+            var bundle= Bundle()
             bundle.putSerializable("imageData",holder.binding.image)
             a.arguments=bundle
+
+            /*replacing the single fragment*/
             manager.beginTransaction()
                 .replace(R.id.main_2,a).addToBackStack(null).commitAllowingStateLoss()
         })

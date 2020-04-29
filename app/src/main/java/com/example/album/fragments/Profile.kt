@@ -1,4 +1,4 @@
-package com.example.album.Fragments
+package com.example.album.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -15,7 +14,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 
 import com.example.album.R
-import com.example.album.data.Imagerepository
+import com.example.album.data.ImageRepository
 import com.example.album.firebase.FirebaseSource
 
 class Profile : Fragment() {
@@ -42,7 +41,7 @@ class Profile : Fragment() {
         var a= FirebaseSource()
       //  var ar=Imagerepository(a).getProfileImageUrl(user_id!!)
       //  Log.v("arratylist is",ar.toString()+"is")
-        var img_url= Imagerepository(a).getProfileImageUrl(user_id!!)
+        var img_url= ImageRepository(a).getProfileImageUrl(user_id!!)
         var sign_out:Button=view.findViewById(R.id.sign_out)
         Glide.with(this)
             .load(img_url)

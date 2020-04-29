@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
-import com.example.album.Fragments.BottomSheet
+import com.example.album.fragments.BottomSheet
 import com.example.album.ImageData
 
 import com.example.album.R
-import com.example.album.data.Imagerepository
+import com.example.album.data.ImageRepository
 import com.example.album.firebase.FirebaseSource
 import com.example.album.ui.Image.ImageFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -94,7 +94,7 @@ class SoloImage : Fragment(), View.OnClickListener {
 
     private fun deleteImage() {
         var firebaseSource: FirebaseSource = FirebaseSource()
-        var repo= Imagerepository(firebaseSource)
+        var repo= ImageRepository(firebaseSource)
         repo.deleteImage(data,activity!!.applicationContext)
         var a=ImageFragment.newInstance()
         var b=Bundle()

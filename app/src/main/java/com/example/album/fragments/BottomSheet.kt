@@ -1,4 +1,4 @@
-package com.example.album.Fragments
+package com.example.album.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.album.ImageData
 import com.example.album.R
-import com.example.album.data.Imagerepository
+import com.example.album.data.ImageRepository
 import com.example.album.firebase.FirebaseSource
 import com.example.album.ui.Image.ImageFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -39,7 +39,7 @@ class BottomSheet(
 
     private fun deleteImage() {
         var firebaseSource: FirebaseSource = FirebaseSource()
-        var repo= Imagerepository(firebaseSource)
+        var repo= ImageRepository(firebaseSource)
         repo.deleteImage(data1, activity!!.applicationContext)
         var a= ImageFragment.newInstance()
         var b=Bundle()

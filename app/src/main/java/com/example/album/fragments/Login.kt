@@ -1,4 +1,4 @@
-package com.example.album.Fragments
+package com.example.album.fragments
 
 import android.content.Context
 import android.content.Intent
@@ -18,7 +18,7 @@ import com.example.album.GalleryActivity
 import com.example.album.POJO.ProfileData
 
 import com.example.album.R
-import com.example.album.data.Imagerepository
+import com.example.album.data.ImageRepository
 import com.example.album.firebase.FirebaseSource
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -91,7 +91,7 @@ class Login : Fragment(), View.OnClickListener {
         if(v?.id ==R.id.btn_sign_in)
         {
             var firebaseSource: FirebaseSource = FirebaseSource()
-            var repo= Imagerepository(firebaseSource)
+            var repo= ImageRepository(firebaseSource)
             repo.checkAuth(edt_email.text.toString(),edt_password.text.toString(),this.context!!)
            //   checkRegisteredEmailValidation()
 

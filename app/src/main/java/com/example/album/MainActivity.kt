@@ -3,7 +3,7 @@ package com.example.album
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
-import com.example.album.Fragments.Login
+import com.example.album.fragments.Login
 import com.example.album.firebase.FirebaseSource
 
 class MainActivity : AppCompatActivity() {

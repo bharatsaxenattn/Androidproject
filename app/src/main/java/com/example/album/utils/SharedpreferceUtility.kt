@@ -1,4 +1,4 @@
-package com.example.album.Utils
+package com.example.album.utils
 
 import android.content.Context
 import android.content.SharedPreferences
