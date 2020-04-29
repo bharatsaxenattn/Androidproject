@@ -26,4 +26,8 @@ class ImageRepository(private  val  firebase:FirebaseSource) {
 
     /* used to get the image url of the profile*/
     fun getProfileImageUrl(firebase_user_id:String)=firebase.getProfileUrl(firebase_user_id)
+
+    /* for uploading category  image url and image to the server */
+
+    fun uploadCategoryImage(uri:Uri,context: Context,titletxt:String)=firebase.uploadCategoryImage(uri,context,titletxt)
 }

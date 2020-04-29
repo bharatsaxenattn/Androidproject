@@ -15,7 +15,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
-import com.example.album.GalleryActivity
+import com.example.album.activity.GalleryActivity
 import com.example.album.POJO.ProfileData
 import com.example.album.R
 
@@ -55,12 +55,6 @@ lateinit var firebaseDatabase:FirebaseDatabase
 
 
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-      /* currentUser= mAuth.getCurrentUser()!!;
-        updateUI(currentUser)*/
     }
 
     private fun updateUI() {
@@ -217,15 +211,7 @@ lateinit var firebaseDatabase:FirebaseDatabase
 
             storage= FirebaseStorage.getInstance()
             mstorageReference=storage.getReference().child(id.toString())
-            /*mstorageReference.putFile(uri).addOnCompleteListener(
-                { task->
-                    if(task.isSuccessful)
-                    {
-                         var url= task.getResult()?.storage?.downloadUrl!!
-                        Log.v("image url==", url.toString())
-                    }
-                }
-            )*/
+
             var progressDialog= ProgressDialog(activity)
             // Code for showing progressDialog while uploading
             progressDialog.setTitle("Uploading...");

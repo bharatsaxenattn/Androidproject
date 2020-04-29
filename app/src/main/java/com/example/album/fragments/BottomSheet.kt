@@ -16,8 +16,6 @@ class BottomSheet(
     var data1: ImageData
 ) : BottomSheetDialogFragment() {
 
-    private var mBottomSheetListener: BottomSheetListener? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +45,7 @@ class BottomSheet(
         a.arguments=b
         dismiss()
         activity!!.supportFragmentManager.beginTransaction()
-            .replace(R.id.main_2,a).addToBackStack(null).commitAllowingStateLoss()
+            .replace(R.id.main_2,a).commitAllowingStateLoss()
 
 
     }
@@ -56,16 +54,5 @@ class BottomSheet(
         fun onOptionClick(text: String)
     }
 
-    /*override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        try {
-            mBottomSheetListener = context as BottomSheetListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(context!!.toString())
-        }
-
-
-    }*/
 }
 

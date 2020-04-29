@@ -14,7 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
-import com.example.album.GalleryActivity
+import com.example.album.activity.GalleryActivity
 import com.example.album.POJO.ProfileData
 
 import com.example.album.R
@@ -54,7 +54,8 @@ class Login : Fragment(), View.OnClickListener {
         Log.v("sharedPre",a.toString())
         if(a)
         {
-            val intent:Intent=Intent(context,GalleryActivity::class.java)
+            val intent:Intent=Intent(context,
+                GalleryActivity::class.java)
            startActivity(intent)
         }
 
@@ -106,39 +107,5 @@ class Login : Fragment(), View.OnClickListener {
     }
 
 
-     fun checkRegisteredEmailValidation() {
-        mAuth= FirebaseAuth.getInstance()
-        mAuth.signInWithEmailAndPassword(edt_email.text.toString(),edt_password.text.toString())
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if(task.isSuccessful)
-                {
-                    fUser= mAuth.currentUser!!
-                    reference=firebaseDatabase.getReference("Users").child(fUser.uid)
-                    reference.addValueEventListener(object: ValueEventListener
-                    {
-                        override fun onDataChange(p0: DataSnapshot) {
-                            val value=p0.getValue(ProfileData::class.java)
-                            Log.v("value==",value.toString())
-
-                        }
-
-                        override fun onCancelled(p0: DatabaseError) {
-                            Toast.makeText(activity,"Error occur!!", Toast.LENGTH_LONG).show()
-                        }
-                    })
-                    Toast.makeText(activity,"SignIn", Toast.LENGTH_LONG).show()
-
-                    val intent:Intent=Intent(activity,GalleryActivity::class.java)
-                    startActivity(intent)
-                }
-                else
-                {
-                    Toast.makeText(activity,"Invalid details", Toast.LENGTH_LONG).show()
-                }
-            })
-
-
-
-    }
 
 }

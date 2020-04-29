@@ -10,13 +10,16 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.album.AlbumItems2
-import com.example.album.GalleryActivity
+import com.example.album.activity.GalleryActivity
 import com.example.album.ImageData
+import com.example.album.POJO.CategoryData
 import com.example.album.POJO.ProfileData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
+import java.lang.Exception
 import java.time.LocalTime
 
 class FirebaseSource {
@@ -281,25 +284,36 @@ class FirebaseSource {
         var ref = firebaseStorageInstance.getReference("AlbumCategory").child(user)
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                var arrayList: ArrayList<AlbumItems2>
-                arrayList = ArrayList()
-                if (p0.getValue() != null) {
+                try {
+                    var arrayList: ArrayList<AlbumItems2>
+                    arrayList = ArrayList()
 
-                    var hashMap: HashMap<String, HashMap<String, String>?>?
-                    hashMap = p0.getValue() as HashMap<String, HashMap<String, String>?>
-                    for (key in hashMap.keys) {
-                        var a = hashMap[key]!!
-                        Log.v("value1==", a.toString())
-                        Log.v("key==", key.toString())
-                        var title = a["title"]
-                        var url = a["url"]
-                        var data = AlbumItems2(title, url)
-                        arrayList.add(data)
-                        //   arrayList.add(a)
+                    if (p0.getValue() != null) {
+
+                        var hashMap: HashMap<String, HashMap<String, String>?>?
+                        hashMap = p0.getValue() as HashMap<String, HashMap<String, String>?>
+                        for (key in hashMap.keys) {
+                            var a = hashMap[key]!!
+                            Log.v("value1==", a.toString())
+                            Log.v("key==", key.toString())
+                            var title = a["title"]
+                            var url = a["url"]
+                            var data = AlbumItems2(title, url)
+                            arrayList.add(data)
+                            //   arrayList.add(a)
+                        }
+
                     }
+                    lvdata.value = arrayList
+                }
+                catch (e:KotlinNullPointerException)
+                {
 
                 }
-                lvdata.value = arrayList
+                catch(e1:Exception)
+                {
+
+                }
 
             }
 
@@ -307,7 +321,7 @@ class FirebaseSource {
                 // Toast.makeText(activity,"Error occur!!", Toast.LENGTH_LONG).show()
             }
         })
-        return lvdata
+            return lvdata
     }
 
 
@@ -333,6 +347,83 @@ class FirebaseSource {
         })
 
         return profile_url
+    }
+
+
+
+     fun uploadCategoryImage(uri:Uri,context: Context,titletxt:String) {
+        var uri=uri
+        if (uri != null) {
+            var progressDialog = ProgressDialog(context)
+            // Code for showing progressDialog while uploading
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+            val baos = ByteArrayOutputStream()
+            var s = FirebaseSource().getFirebaseUser(context!!.applicationContext)
+            val storafgeRef = FirebaseStorage.getInstance()
+                .reference.child("albumCategory/$s/$titletxt")
+
+            val uplaod = storafgeRef.putFile(uri)
+            uplaod.addOnCompleteListener { uplaodTask ->
+                if (uplaodTask.isSuccessful) {
+                    storafgeRef.downloadUrl.addOnCompleteListener { urlTask ->
+                        urlTask.result?.let {
+                            uri = it
+
+                            var imageUrl = uri.toString()
+                            // imageView_category.setImageBitmap(imageBitmap)
+                            progressDialog.dismiss()
+                            Toast.makeText(
+                                context,
+                                "ImageUploaded sucessfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.v("path==", uri.toString())
+                            uploadCategoryImageUrl(imageUrl,titletxt,s)
+
+
+                        }
+                    }
+                } else {
+                    uplaodTask.exception?.let {
+                        progressDialog.dismiss()
+                        Toast.makeText(context, "ImageUploaded failed", Toast.LENGTH_SHORT).show()
+
+                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+
+                     //   var intent = Intent(context, GalleryActivity::class.java)
+                       /* context!!.supportFragmentManager.beginTransaction().replace(
+                            R.id.main_2,
+                            HomeFragment()
+                        ).commit()
+*/
+                        // startActivity(intent)
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun uploadCategoryImageUrl(
+        imageUrl: String,
+        titletxt: String,
+        userId: String
+    ) {
+
+        var data = CategoryData(titletxt, imageUrl)
+        var firebaseDatabase = FirebaseDatabase.getInstance()
+      //  var user = FirebaseSource().getFirebaseUser(activity!!.applicationContext)
+        var reference: DatabaseReference =
+            firebaseDatabase.getReference("AlbumCategory").child(userId).child(titletxt)
+        reference.setValue(data).addOnSuccessListener {
+        }
+       /* activity!!.supportFragmentManager.beginTransaction().replace(
+            R.id.main_2,
+            HomeFragment()
+        ).commit()*/
+
+        //updateUI(user)
     }
 
 }

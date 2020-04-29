@@ -41,12 +41,19 @@ class Profile : Fragment() {
         var a= FirebaseSource()
       //  var ar=Imagerepository(a).getProfileImageUrl(user_id!!)
       //  Log.v("arratylist is",ar.toString()+"is")
+
+        /* getting image url form the firebase server*/
         var img_url= ImageRepository(a).getProfileImageUrl(user_id!!)
         var sign_out:Button=view.findViewById(R.id.sign_out)
+        /* loading the image into the imageview*/
         Glide.with(this)
             .load(img_url)
             .into(profile_image)
         Log.v("profile",em+"email"+img_url)
+        name.setText(nm)
+        email.setText(em)
+
+        /* signing out from the current user*/
         sign_out.setOnClickListener(View.OnClickListener {
             var shared= context!!.getSharedPreferences("userInfo", Context.MODE_PRIVATE)
             var editor:SharedPreferences.Editor=shared.edit()
@@ -55,12 +62,7 @@ class Profile : Fragment() {
             editor.commit()
             activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_2,Login.newInstance()).addToBackStack(null).commit()
         })
-        name.setText(nm)
-        email.setText(em)
 
-
-
-        // Inflate the layout for this fragment
         return view
     }
 

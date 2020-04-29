@@ -32,8 +32,6 @@ private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
  */
 class SoloImage : Fragment(), View.OnClickListener {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
    lateinit var data:ImageData
     lateinit var imageView:ImageView
     lateinit var deleteBtn:ImageView
@@ -42,10 +40,6 @@ class SoloImage : Fragment(), View.OnClickListener {
         super.onCreate(savedInstanceState)
 
 
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -92,16 +86,5 @@ class SoloImage : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun deleteImage() {
-        var firebaseSource: FirebaseSource = FirebaseSource()
-        var repo= ImageRepository(firebaseSource)
-        repo.deleteImage(data,activity!!.applicationContext)
-        var a=ImageFragment.newInstance()
-        var b=Bundle()
-        b.putString("title",data.title)
-        a.arguments=b
-        activity!!.supportFragmentManager.beginTransaction()
-            .replace(R.id.main_2,a).addToBackStack(null).commit()
 
-    }
 }

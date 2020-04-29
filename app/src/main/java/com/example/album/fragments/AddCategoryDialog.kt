@@ -17,14 +17,15 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.album.GalleryActivity
+import com.example.album.activity.GalleryActivity
 import com.example.album.POJO.CategoryData
 import com.example.album.R
+import com.example.album.data.ImageRepository
 import com.example.album.firebase.FirebaseSource
+import com.example.album.ui.home.HomeFragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
 
 class AddCategoryDialog : Fragment() {
@@ -126,106 +127,15 @@ class AddCategoryDialog : Fragment() {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_CODE) {
             uri = data?.data!!
             //   val bitmap= data?.extras?.get("data") as Bitmap
-            uploadImage()
+            var repository=ImageRepository(FirebaseSource())
+
+            /*uploading the category data*/
+            repository.uploadCategoryImage(uri,context!!,titletxt)
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_2,HomeFragment()).commit()
+
+            //uploadImage()
         }
     }
 
-    private fun uploadImage() {
 
-        if (uri != null) {
-            var progressDialog = ProgressDialog(activity)
-            // Code for showing progressDialog while uploading
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-            val baos = ByteArrayOutputStream()
-            var s = FirebaseSource().getFirebaseUser(activity!!.applicationContext)
-            val storafgeRef = FirebaseStorage.getInstance()
-                .reference.child("albumCategory/$s/$titletxt")
-            //    bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos)
-
-            val image = baos.toByteArray()
-            val uplaod = storafgeRef.putFile(uri)
-            uplaod.addOnCompleteListener { uplaodTask ->
-                if (uplaodTask.isSuccessful) {
-                    storafgeRef.downloadUrl.addOnCompleteListener { urlTask ->
-                        urlTask.result?.let {
-                            uri = it
-
-                            imageUrl = uri.toString()
-                            // imageView_category.setImageBitmap(imageBitmap)
-                            progressDialog.dismiss()
-                            Toast.makeText(
-                                activity,
-                                "ImageUploaded sucessfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            Log.v("path==", uri.toString())
-                            uploadImageUrl()
-
-
-                        }
-                    }
-                } else {
-                    uplaodTask.exception?.let {
-                        progressDialog.dismiss()
-                        Toast.makeText(activity, "ImageUploaded failed", Toast.LENGTH_SHORT).show()
-
-                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-                        var intent = Intent(activity, GalleryActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-            }
-            /* if (uri != null) {
-            var progressDialog=ProgressDialog(this)
-            // Code for showing progressDialog while uploading
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            // Defining the child of storageReference
-            var ref:StorageReference=reference.child("images/"+"hello")
-
-            // adding listeners on upload
-            // or failure of image
-           ref.putFile(uri).addOnSuccessListener { taskSnapshot ->
-
-               Log.v("Image Progress ","Sucess")
-               progressDialog.dismiss()
-           }.addOnFailureListener(OnFailureListener {
-               Log.v("Image Progress ","Failure")
-               progressDialog.dismiss()
-           }).addOnProgressListener {
-               taskSnapshot: UploadTask.TaskSnapshot ->
-               var byteTranfered=(100.0
-                       * taskSnapshot.getBytesTransferred()
-                       / taskSnapshot.getTotalByteCount())
-               progressDialog.setMessage("Uploaded "+byteTranfered+" %")
-           }
-          var path1=  storage.getReferenceFromUrl("gs://album-d9827.appspot.com/images/"+titletxt+".jpg")
-            var path=ref.path
-            Log.v("path==",path.toString())
-            Log.v("path==",path1.toString())
-
-
-        }
-
-*/
-        }
-    }
-
-    private fun uploadImageUrl() {
-
-        var data = CategoryData(titletxt, imageUrl)
-        var firebaseDatabase = FirebaseDatabase.getInstance()
-        var user = FirebaseSource().getFirebaseUser(activity!!.applicationContext)
-        var reference: DatabaseReference =
-            firebaseDatabase.getReference("AlbumCategory").child(user).child(titletxt)
-        reference.setValue(data).addOnSuccessListener {
-            Toast.makeText(activity, "Database Sucessfully", Toast.LENGTH_LONG).show()
-        }
-        var intent = Intent(activity, GalleryActivity::class.java)
-        startActivity(intent)
-
-        //updateUI(user)
-    }
 }

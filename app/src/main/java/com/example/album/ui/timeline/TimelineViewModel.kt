@@ -1,4 +1,4 @@
-package com.example.album.ui
+package com.example.album.ui.timeline
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

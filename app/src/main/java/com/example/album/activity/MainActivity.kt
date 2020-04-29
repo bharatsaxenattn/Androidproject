@@ -1,8 +1,9 @@
-package com.example.album
+package com.example.album.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
+import com.example.album.R
 import com.example.album.fragments.Login
 import com.example.album.firebase.FirebaseSource
 
@@ -17,4 +18,6 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().replace(R.id.main_layout, Login.newInstance()).addToBackStack(null).commit()
 
     }
+
+
 }
