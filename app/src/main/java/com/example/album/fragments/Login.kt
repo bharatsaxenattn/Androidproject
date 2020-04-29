@@ -14,7 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
-import com.example.album.GalleryActivity
+import com.example.album.activity.GalleryActivity
 import com.example.album.POJO.ProfileData
 
 import com.example.album.R
@@ -25,16 +25,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Login.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Login : Fragment(), View.OnClickListener {
     lateinit var btnSignIn: Button
     lateinit var manager: FragmentManager
@@ -42,19 +32,18 @@ class Login : Fragment(), View.OnClickListener {
     lateinit var edt_email: EditText
     lateinit var edt_password: EditText
     lateinit var firebaseDatabase: FirebaseDatabase
-    lateinit var reference: DatabaseReference
-    lateinit var mAuth: FirebaseAuth
-    lateinit var fUser: FirebaseUser
-    lateinit var mchildListener: ChildEventListener
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPreferences: SharedPreferences = activity!!.getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         var a=sharedPreferences.getBoolean("sign",false)
+
         Log.v("sharedPre",a.toString())
         if(a)
         {
-            val intent:Intent=Intent(context,GalleryActivity::class.java)
+            val intent:Intent=Intent(context,
+                GalleryActivity::class.java)
            startActivity(intent)
         }
 
@@ -101,44 +90,10 @@ class Login : Fragment(), View.OnClickListener {
         }
         if(v?.id ==R.id.signupTxt)
         {
-            manager.beginTransaction().replace(R.id.main_screen,Signup.newInstance()).addToBackStack(null).commit()
+            manager.beginTransaction().replace(R.id.main_screen,Signup.newInstance()).commit()
         }
     }
 
 
-     fun checkRegisteredEmailValidation() {
-        mAuth= FirebaseAuth.getInstance()
-        mAuth.signInWithEmailAndPassword(edt_email.text.toString(),edt_password.text.toString())
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if(task.isSuccessful)
-                {
-                    fUser= mAuth.currentUser!!
-                    reference=firebaseDatabase.getReference("Users").child(fUser.uid)
-                    reference.addValueEventListener(object: ValueEventListener
-                    {
-                        override fun onDataChange(p0: DataSnapshot) {
-                            val value=p0.getValue(ProfileData::class.java)
-                            Log.v("value==",value.toString())
-
-                        }
-
-                        override fun onCancelled(p0: DatabaseError) {
-                            Toast.makeText(activity,"Error occur!!", Toast.LENGTH_LONG).show()
-                        }
-                    })
-                    Toast.makeText(activity,"SignIn", Toast.LENGTH_LONG).show()
-
-                    val intent:Intent=Intent(activity,GalleryActivity::class.java)
-                    startActivity(intent)
-                }
-                else
-                {
-                    Toast.makeText(activity,"Invalid details", Toast.LENGTH_LONG).show()
-                }
-            })
-
-
-
-    }
 
 }

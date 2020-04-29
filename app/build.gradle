@@ -38,6 +38,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    flavorDimensions 'default'
+    productFlavors {
+        bottomNavigation {
+            dimension = 'default'
+        }
+        sideNavigation {
+            dimension = 'default'
+        }
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }

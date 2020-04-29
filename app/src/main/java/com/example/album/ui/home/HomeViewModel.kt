@@ -15,7 +15,7 @@ class HomeViewModel : ViewModel() {
 
     fun getCategoryData(user:String):MutableLiveData<List<AlbumItems2>>
     {
-        var a= repo.getCategoryImageData(user)
-        return  a
+        var categoryList= repo.getCategoryImageData(user)
+        return  categoryList
     }
 }

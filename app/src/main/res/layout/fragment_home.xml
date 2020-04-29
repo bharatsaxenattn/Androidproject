@@ -48,7 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/_50dp"
+        android:layout_marginRight="@dimen/fab_margin"
         android:backgroundTint="#000"
         app:elevation="0dp"
         app:srcCompat="@drawable/ic_add_black_24dp" />
