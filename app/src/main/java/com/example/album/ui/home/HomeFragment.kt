@@ -96,7 +96,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
         viewModel.getCategoryData(user).observe(activity!!, Observer<List<AlbumItems2>> {
             if(it!=null)
             {
+<<<<<<< HEAD
 
+=======
+>>>>>>> e2e1bf8acf1d0e00003c8f2cd59dc0d9cf68164a
                 val adapter = MyAdapter(it, grid, activity!!.supportFragmentManager)
                 shimmerFrameLayout.visibility = View.GONE
                 shimmerFrameLayout.stopShimmer()
