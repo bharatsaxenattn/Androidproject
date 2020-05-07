@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/signup_main"
-    tools:context=".fragments.Signup">
+    tools:context=".view.ui.signup.Signup">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/_60dp"
-           android:layout_marginLeft="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_20dp"
             android:layout_marginRight="@dimen/_20dp"
             android:hint="@string/name"
             android:textColorHint="@color/white"
@@ -53,6 +53,7 @@
             android:layout_height="60dp"
             android:layout_margin="@dimen/_20dp"
             android:hint="@string/email"
+            android:inputType="textEmailAddress"
             android:textColorHint="@color/white"
             android:paddingLeft="5dp"
             android:textStyle="italic"
@@ -68,6 +69,7 @@
             android:layout_height="60dp"
             android:layout_margin="@dimen/_20dp"
             android:hint="@string/password"
+            android:inputType="textPassword"
             android:textColorHint="@color/white"
             android:textStyle="italic"
             android:backgroundTint="@color/white"

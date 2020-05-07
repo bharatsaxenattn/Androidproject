@@ -13,7 +13,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/baseBackground"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".view.ui.home.HomeFragment">
 
 <include
     layout="@layout/top_theme_change"

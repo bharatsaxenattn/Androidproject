@@ -7,7 +7,7 @@
     <data>
         <variable
             name="album"
-            type="com.example.album.AlbumItems2" />
+            type="com.example.album.model.data.pojo.AlbumItems2" />
     </data>
 
     <androidx.cardview.widget.CardView

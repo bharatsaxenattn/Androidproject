@@ -13,12 +13,13 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="false"
         android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="adjustPan|adjustResize"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.GalleryActivity"
+            android:name="com.example.album.view.activity.GalleryActivity"
             android:label="@string/title_activity_gallery"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activity.MainActivity">
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.album.view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="image"
-            type="com.example.album.ImageData" />
+            type="com.example.album.model.data.pojo.ImageData" />
     </data>
 
     <androidx.cardview.widget.CardView
