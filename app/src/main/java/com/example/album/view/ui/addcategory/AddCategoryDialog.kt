@@ -31,6 +31,7 @@ class AddCategoryDialog : Fragment() {
 
     companion object {
 
+        /* creating new instance of fragment*/
         @JvmStatic
         fun newInstance(): AddCategoryDialog {
             var instance =
@@ -43,12 +44,13 @@ class AddCategoryDialog : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        /* initializing view components*/
         var view: View = inflater.inflate(R.layout.create_popup, container, false)
         var title: EditText = view.findViewById(R.id.edt_title)
         var done: Button = view.findViewById(R.id.btn_done)
         var cancel: Button = view.findViewById(R.id.btn_cancel)
 
-        done.setOnClickListener(View.OnClickListener {
+        done.setOnClickListener({
             if (title.text.length < 3)
                 title.setError("Please provide proper album name")
             else {
@@ -67,6 +69,7 @@ class AddCategoryDialog : Fragment() {
 
     private fun openAlbum(text: String?) {
 
+        /* check for android version for request handling*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
                     this.context!!,
@@ -111,19 +114,16 @@ class AddCategoryDialog : Fragment() {
                     //permission from popup denied
                     activity!!.showToast("Permission denied")
 
-                   // Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
-    //handle result of picked image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_CODE) {
             uri = data?.data!!
-            //   val bitmap= data?.extras?.get("data") as Bitmap
-
+     /* upploading image when user select image from gallery*/
             var addCategoryViewModel: AddCategoryViewModel = ViewModelProvider(this)[AddCategoryViewModel::class.java]
 
             addCategoryViewModel.addCategory(uri,context!!,titletxt).observe(activity!!, Observer {
@@ -132,13 +132,7 @@ class AddCategoryDialog : Fragment() {
                     activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_2,HomeFragment()).commit()
                 }
             })
-           /* var repository=ImageRepository(FirebaseSource())
 
-            *//*uploading the category data*//*
-            repository.uploadCategoryImage(uri,context!!,titletxt)
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_2,HomeFragment()).commit()*/
-
-            //uploadImage()
         }
     }
 

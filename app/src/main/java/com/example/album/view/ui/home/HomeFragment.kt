@@ -16,6 +16,8 @@ import com.example.album.model.data.pojo.AlbumItems2
 import com.example.album.view.ui.addcategory.AddCategoryDialog
 import com.example.album.R
 import com.example.album.model.data.firebase.FirebaseSource
+import com.example.album.utils.isNetworkAvailable
+import com.example.album.utils.showToast
 import com.example.album.view.ui.timeline.TimelineFragment
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,6 +41,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         shimmerFrameLayout=view.findViewById(R.id.parentShimmerLayout)
         shimmerFrameLayout.startShimmer()
+
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         recyclerView=view.findViewById(R.id.item_reccycelr)
         grid2=view.findViewById(R.id.categoryBtn)
@@ -51,11 +54,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
             var tran=activity!!.supportFragmentManager
             tran.beginTransaction().replace(R.id.main_2,
                 AddCategoryDialog.newInstance()).commit()
-            // createAlbumDialog()
         }
         grid4.setOnClickListener(this)
         grid2.setOnClickListener(this)
-    //   timeline.setOnClickListener(this)
         if(flag==0)
         {
             getCategoryImageData(2)
@@ -82,30 +83,32 @@ class HomeFragment : Fragment(), View.OnClickListener {
         {
             getCategoryImageData(2)
         }
-       /* if(v!!.id==R.id.timeline)
-        {
 
-        }*/
     }
 
 
     fun getCategoryImageData(grid:Int)
     {
-        recyclerView.layoutManager= GridLayoutManager(activity,grid) as RecyclerView.LayoutManager?
-        var viewModel: HomeViewModel = ViewModelProviders.of(activity!!).get(HomeViewModel::class.java)
-        var user=FirebaseSource().getFirebaseUser(this.context!!)
-        viewModel.getCategoryData(user).observe(activity!!, Observer<List<AlbumItems2>> {
-            if(it!=null)
-            {
+        if(activity!!.isNetworkAvailable()){
+            recyclerView.layoutManager= GridLayoutManager(activity,grid) as RecyclerView.LayoutManager?
+            var viewModel: HomeViewModel = ViewModelProviders.of(activity!!).get(HomeViewModel::class.java)
+            var user=FirebaseSource().getFirebaseUser(this.context!!)
+            viewModel.getCategoryData(user).observe(activity!!, Observer<List<AlbumItems2>> {
+                if(it!=null)
+                {
 
-                val adapter = MyAdapter(it, grid, activity!!.supportFragmentManager)
-                shimmerFrameLayout.visibility = View.GONE
-                shimmerFrameLayout.stopShimmer()
-                recyclerView.adapter = adapter
-            }
+                    val adapter = MyAdapter(it, grid, activity!!.supportFragmentManager)
+                    shimmerFrameLayout.visibility = View.GONE
+                    shimmerFrameLayout.stopShimmer()
+                    recyclerView.adapter = adapter
+                }
 
 
-        })
+            })
+        }
+        else
+            activity!!.showToast("Please connect to internet and wifi")
+
 
 
     }

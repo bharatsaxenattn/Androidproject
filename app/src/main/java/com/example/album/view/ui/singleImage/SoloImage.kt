@@ -14,6 +14,7 @@ import com.example.album.model.data.pojo.ImageData
 
 import com.example.album.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.app_bar_gallery2.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

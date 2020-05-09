@@ -43,14 +43,12 @@ class ImageAdapter(var arrayList: List<ImageData>, var manager:FragmentManager):
             bundle.putSerializable("imageData",holder.binding.image)
             a.arguments=bundle
 
-            /*replacing the single fragment*/
-           /* manager.beginTransaction()
-                .replace(R.id.main_2,a).addToBackStack(null).commitAllowingStateLoss()*/
+
             if(Constant.type==Constant.TYPE.BOTTOM)
             {
                 Log.v(TAG,"inside bottom")
                 manager.beginTransaction()
-                    .replace(R.id.bottom_container,a).addToBackStack(null).commitAllowingStateLoss()
+                    .replace(R.id.main_2,a).addToBackStack(null).commitAllowingStateLoss()
             }
             else
             {

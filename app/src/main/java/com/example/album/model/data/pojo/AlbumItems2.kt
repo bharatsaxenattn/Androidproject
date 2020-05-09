@@ -14,6 +14,8 @@ data class AlbumItems2(var name:String?,var imgUrl:String?) {
 companion object{
  val IMAGETYPE2=2
  val IMAGETYPE4=4
+
+ /*setting image to the imageview*/
  @JvmStatic @BindingAdapter("album1")
   fun loadImage(view: ImageView, imageUrl: String?) {
    Glide.with(view.context)

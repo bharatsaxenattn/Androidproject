@@ -33,8 +33,8 @@ import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "title"
-private const val ARG_PARAM2 = "param2"
+private const val TITLE = "title"
+
 lateinit var manager: FragmentManager
 lateinit var recyclerView: RecyclerView
 lateinit var shimmerFrameLayout: ShimmerFrameLayout
@@ -53,7 +53,7 @@ class ImageFragment : Fragment(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            title = it.getString(ARG_PARAM1)
+            title = it.getString(TITLE)
         }
 
 
@@ -70,7 +70,9 @@ class ImageFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         var view = inflater.inflate(R.layout.fragment_image, container, false)
+        /* initializing view components*/
         shimmerFrameLayout=view.findViewById(R.id.parentShimmerLayout)
         shimmerFrameLayout.startShimmer()
         var fab: FloatingActionButton = view.findViewById(R.id.addFab)

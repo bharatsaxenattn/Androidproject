@@ -7,6 +7,7 @@
     <color name="light_pink">#f186c0</color>
     <color name="white">#fff</color>
     <color name="baseBackground">#eaeaea</color>
+    <color name="back">#dddddd</color>
     <color name="transparent_black">#90000000</color><!-- 40 per transparent-->
     <color name="deep_purple_50">#EDE7F6</color><!-- 40 per transparent-->
     <color name="blue_100">#BBDEFB</color><!-- 40 per transparent-->

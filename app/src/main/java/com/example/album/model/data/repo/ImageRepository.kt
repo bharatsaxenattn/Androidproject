@@ -37,5 +37,8 @@ class ImageRepository(private  val  firebase:FirebaseSource) {
 
     fun uploadCategoryImage(uri:Uri,context: Context,titletxt:String)=firebase.uploadCategoryImage(uri,context,titletxt)
 
+    /*uploading the profile image */
     fun uploadProfileImage(id:String,uri: Uri,activity: Activity)=firebase.uploadProfileImage(id,uri,activity)
+
+    fun uploadProfileUrl(userId:String,imagegeUrl: String)=firebase.uploadprofileUrl(userId,imagegeUrl)
 }

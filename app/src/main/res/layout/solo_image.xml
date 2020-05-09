@@ -5,7 +5,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/solo_card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true">
     <ImageView
         android:id="@+id/solo_image"
         android:layout_width="match_parent"

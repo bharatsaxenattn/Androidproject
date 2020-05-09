@@ -1,5 +1,6 @@
 package com.example.album.view.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -30,16 +31,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val count = supportFragmentManager.backStackEntryCount
-        Log.v("Count==",count.toString())
-        if (count == 0) {
+        Log.v("onvack","exe")
             super.onBackPressed()
-            finish()
-            // System.exit(1)
-        }
-        else {
-            supportFragmentManager.popBackStack()
-        }
+            val a = Intent(Intent.ACTION_MAIN)
+            a.addCategory(Intent.CATEGORY_HOME)
+            a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(a)
+
     }
 
 

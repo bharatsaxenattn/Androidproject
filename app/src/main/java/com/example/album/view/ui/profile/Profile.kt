@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 
 import com.example.album.R
 import com.example.album.view.ui.login.Login
+import com.google.firebase.auth.FirebaseAuth
 
 class Profile : Fragment() {
 
@@ -42,9 +43,6 @@ class Profile : Fragment() {
         var em=sharedPreferences.getString("email","")
         var user_id=sharedPreferences.getString("user_id","")
 
-      //  var a= FirebaseSource()
-      //  var ar=Imagerepository(a).getProfileImageUrl(user_id!!)
-      //  Log.v("arratylist is",ar.toString()+"is")
 
         /* getting image url form the firebase server*/
 
@@ -55,30 +53,29 @@ class Profile : Fragment() {
                 .into(profile_image)
             Log.v("profile image",it)
         })
-      /*  var img_url= ImageRepository(a).getProfileImageUrl(user_id!!)
 
-        *//* loading the image into the imageview*//*
-        Glide.with(this)
-            .load(img_url)
-            .into(profile_image)
-        Log.v("profile",em+"email"+img_url)*/
         name.setText(nm)
         email.setText(em)
 
         /* signing out from the current user*/
         sign_out.setOnClickListener(View.OnClickListener {
-            var shared= context!!.getSharedPreferences("userInfo", Context.MODE_PRIVATE)
-            var editor:SharedPreferences.Editor=shared.edit()
-            editor.putBoolean("sign",false)
-            editor.apply()
-            editor.commit()
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_2,
-                Login.newInstance()).addToBackStack(null).commit()
+            siginOut()
+
         })
 
         return view
     }
 
+    private fun siginOut() {
+        var shared= context!!.getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        var editor:SharedPreferences.Editor=shared.edit()
+        editor.putBoolean("sign",false)
+        editor.apply()
+        editor.commit()
+        FirebaseAuth.getInstance().signOut();
+        activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_2,
+            Login.newInstance()).addToBackStack(null).commit()
+    }
 
 
     companion object {

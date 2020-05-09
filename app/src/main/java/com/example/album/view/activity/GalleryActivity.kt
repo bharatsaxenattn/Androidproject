@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,10 +28,12 @@ import com.example.album.R
 import com.example.album.view.ui.home.HomeFragment
 import com.example.album.view.ui.login.Login
 import com.example.album.view.ui.profile.Profile
+import com.example.album.view.ui.profile.ProfileViewModel
 import com.example.album.view.ui.timeline.TimelineFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.BuildConfig
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -39,13 +43,8 @@ import kotlinx.android.synthetic.main.app_bar_gallery2.*
 class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,BottomNavigationView.OnNavigationItemSelectedListener {
     val TAG= GalleryActivity::class.java.name
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var fab: FloatingActionButton
-    val PERMISSION_CODE = 101
-    val IMAGE_CODE = 102
-    lateinit var uri: Uri
     lateinit var storage: FirebaseStorage
     lateinit var reference: StorageReference
-    lateinit var titletxt: String
     lateinit var imageUrl: String
     lateinit var drawerLayout: DrawerLayout
     lateinit var sharedPreferences: SharedPreferences
@@ -57,31 +56,27 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.v(TAG,BuildConfig.FLAVOR)
         setContentView(R.layout.activity_gallery3)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+        bottomNavigationView=findViewById(R.id.bottom_navigation)
         setSupportActionBar(toolbar)
+
+        /* for initializing that which flavour is selected*/
         if(Constant.type==Constant.TYPE.SIDE)
         {
+            /* if flavour is side navigation bar*/
             initializeSideNavigation()
             Log.v(TAG," sideNaviggation")
         }
         else if(Constant.type==Constant.TYPE.BOTTOM)
         {
+            /*if flavour is bottom navigation bar*/
             supportActionBar!!.hide()
             Log.v(TAG," BottomNavigation")
-            bottomNavigationView=findViewById(R.id.bottom_navigation)
+
             bottomNavigationView.setOnNavigationItemSelectedListener(this)
         }
-           // initializeSideNavigation()
 
-
-
-
-
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
 
     }
 
@@ -96,7 +91,10 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     override fun onResume() {
         super.onResume()
-        bottomNavigationView.visibility=View.VISIBLE
+        if(Constant.type==Constant.TYPE.SIDE) {
+            bottomNavigationView.visibility=View.GONE
+
+        }
     }
 
     private fun navigationViewSetup() {
@@ -113,6 +111,7 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
+
         var name = sharedPreferences.getString("name", "Name")
         var email = sharedPreferences.getString("email", "Email")
         user_id = sharedPreferences.getString("user_id", "")!!
@@ -121,6 +120,14 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         var tvname: TextView = navHeaderView.findViewById(R.id.textView)
         var tv_email: TextView = navHeaderView.findViewById(R.id.nav_email)
+
+        var profileViewModel: ProfileViewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
+        profileViewModel.profileImageUrl(user_id!!).observe(this, Observer {
+            Glide.with(this)
+                .load(it)
+                .into(imgvw)
+            Log.v("profile image",it)
+        })
         Glide.with(this)
             .load(img_url)
             .into(imgvw)
@@ -130,12 +137,6 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
 
-    /*  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-          // Inflate the menu; this adds items to the action bar if it is present.
-          menuInflater.inflate(R.menu.gallery, menu)
-          return true
-      }
-  */
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
@@ -144,7 +145,10 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     override fun onBackPressed() {
         val count = supportFragmentManager.backStackEntryCount
         Log.v("Count==",count.toString())
-        if (count == 0) {
+
+        /* closing the app is user press back and there is no backstack available*/
+        if (count == 0)
+        {
             super.onBackPressed()
             val a = Intent(Intent.ACTION_MAIN)
             a.addCategory(Intent.CATEGORY_HOME)
@@ -156,40 +160,46 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 
+    /* handling onclick of the navigation view*/
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var id = item.itemId
+        val tran = supportFragmentManager
+        /* if user selected the home */
         if (id == R.id.nav_home) {
             toolbar.setTitle("Collections")
-            var tran = supportFragmentManager
-            tran.beginTransaction().replace(R.id.main_2, HomeFragment()).addToBackStack(null)
+
+            tran.beginTransaction().replace(R.id.nav_host_fragment, HomeFragment()).addToBackStack(null)
                 .commit()
 
         }
 
+        /* if user selected timeline option*/
         if (id == R.id.timeline) {
             toolbar.setTitle("Timeline")
-            var tran = supportFragmentManager
-            tran.beginTransaction().replace(R.id.main_2, TimelineFragment.newInstance())
-                .addToBackStack(null).commit()
-        }
-        if (id == R.id.nav_profile) {
-            toolbar.setTitle("Profile")
-            var tran = supportFragmentManager
-            tran.beginTransaction().replace(R.id.main_2, Profile.newInstance()).addToBackStack(null)
+            tran.beginTransaction().replace(R.id.nav_host_fragment, TimelineFragment.newInstance()).addToBackStack(null)
                 .commit()
         }
+        /* if user selected timeline option*/
+        if (id == R.id.nav_profile) {
+            toolbar.setTitle("Profile")
+            tran.beginTransaction().add(R.id.nav_host_fragment, Profile.newInstance()).addToBackStack(null)
+                .commit()
+        }
+        /* if user selected logout option*/
         if (id == R.id.nav_logout) {
             var shared = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
             var editor: SharedPreferences.Editor = shared.edit()
             editor.putBoolean("sign", false)
             editor.apply()
             editor.commit()
-            supportFragmentManager.beginTransaction().replace(R.id.main_2, Login.newInstance())
-                .addToBackStack(null).commit()
+            FirebaseAuth.getInstance().signOut();
+
+            supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, Login.newInstance()).commit()
             if(Constant.type==Constant.TYPE.BOTTOM)
             {
                 bottomNavigationView.visibility=View.GONE
             }
+            FirebaseAuth.getInstance().signOut()
 
         }
         if(Constant.type==Constant.TYPE.SIDE) {

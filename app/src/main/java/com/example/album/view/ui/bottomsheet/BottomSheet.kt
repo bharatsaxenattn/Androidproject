@@ -30,7 +30,7 @@ class BottomSheet(
         })
         cancel.setOnClickListener(View.OnClickListener { dismiss() })
 
-        setStyle(BottomSheetDialogFragment.STYLE_NO_TITLE, R.style.CustomBottomSheetDialogTheme);
+        setStyle(STYLE_NO_TITLE, R.style.CustomBottomSheetDialogTheme);
 
 
         return v
@@ -51,11 +51,6 @@ class BottomSheet(
                     .replace(R.id.main_2,a).commitAllowingStateLoss()
             }
         })
-      /*  var firebaseSource: FirebaseSource = FirebaseSource()
-        var repo= ImageRepository(firebaseSource)
-        repo.deleteImage(data1, activity!!.applicationContext)*/
-
-
 
     }
 

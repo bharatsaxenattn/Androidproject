@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <FrameLayout android:layout_width="match_parent"
-            android:background="@color/transparent_black"
+            android:background="@color/back"
             android:layout_height="160dp">
 
             <ImageView android:id="@+id/main_image_view"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@color/transparent_black"
+            android:background="@color/back"
             android:textColor="#BDBDBD"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -51,7 +51,7 @@
             android:orientation="vertical">
 
             <FrameLayout android:layout_width="match_parent"
-                android:background="@color/transparent_black"
+                android:background="@color/back"
                 android:layout_height="160dp">
 
                 <ImageView
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/transparent_black"
+                android:background="@color/back"
                 android:textColor="#BDBDBD"
                 android:textSize="14sp"
                 android:textStyle="bold"/>

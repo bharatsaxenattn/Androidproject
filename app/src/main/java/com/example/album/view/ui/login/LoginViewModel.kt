@@ -16,4 +16,9 @@ class LoginViewModel :ViewModel()
         var data=repository.checkAuth(email,password,context)
         return data
     }
+
+    fun updateProfileUrl(userid:String,imageUrl:String): MutableLiveData<Boolean> {
+        var data=repository.uploadProfileUrl(userid,imageUrl)
+        return data
+    }
 }

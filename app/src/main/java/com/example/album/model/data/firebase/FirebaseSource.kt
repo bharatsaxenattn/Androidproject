@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings.Global.getString
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +17,7 @@ import com.example.album.model.data.pojo.ImageData
 import com.example.album.model.data.pojo.CategoryData
 import com.example.album.model.data.pojo.ProfileData
 import com.example.album.utils.showToast
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -198,15 +200,23 @@ class FirebaseSource {
                     var shared = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE)
                     var editor: SharedPreferences.Editor = shared.edit()
                     var fUser = firebaseAuth.currentUser!!
-                    lvdata.value=true
+
                     var reference = firebaseStorageInstance.getReference("Users").child(fUser.uid)
                     reference.addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(p0: DataSnapshot) {
+                            lvdata.value=true
                             val value = p0.getValue(ProfileData::class.java)
                             var name = value!!.name!!
                             Log.v("name==", name)
                             Log.v("value==", value.toString())
-                            editor.putString("name", name).apply()
+                            editor.putString("name", name)
+                            editor.putBoolean("sign", true)
+                            editor.putString("user_id", fUser.uid)
+                            editor.putString("email", email)
+                            editor.putString("password", password)
+                            editor.apply()
+                            editor.commit()
+                            editor.commit()
                             progressDialog.dismiss()
 
                         }
@@ -219,13 +229,7 @@ class FirebaseSource {
 
 
                     /* adding the detail of the user in the shared preferences*/
-                    editor.putBoolean("sign", true)
-                    editor.putString("user_id", fUser.uid)
-                    editor.putString("email", email)
 
-                    editor.putString("password", password)
-                    editor.apply()
-                    editor.commit()
                     Log.v("currentUser", fUser.uid + "")
 
                 } else {
@@ -407,7 +411,8 @@ class FirebaseSource {
                             progressDialog.dismiss()
                             context.showToast("ImageUploaded Sucessfully")
                             Log.v("path==", uri.toString())
-                            a=uploadCategoryImageUrl(imageUrl,titletxt,s)
+                            uploadCategoryImageUrl(imageUrl,titletxt,s)
+                            a.value=true
 
 
                         }
@@ -415,18 +420,9 @@ class FirebaseSource {
                 } else {
                     uplaodTask.exception?.let {
                         progressDialog.dismiss()
+                        a.value=false
                         context.showToast("ImageUploaded failed")
-                   /*     Toast.makeText(context, "ImageUploaded failed", Toast.LENGTH_SHORT).show()
 
-                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()*/
-
-                     //   var intent = Intent(context, GalleryActivity::class.java)
-                       /* context!!.supportFragmentManager.beginTransaction().replace(
-                            R.id.main_2,
-                            HomeFragment()
-                        ).commit()
-*/
-                        // startActivity(intent)
                     }
                 }
             }
@@ -435,7 +431,7 @@ class FirebaseSource {
          return  a
     }
 
-    private fun uploadCategoryImageUrl(
+     fun uploadCategoryImageUrl(
         imageUrl: String,
         titletxt: String,
         userId: String
@@ -450,12 +446,7 @@ class FirebaseSource {
         reference.setValue(data).addOnSuccessListener {
             lvdata.value=true
         }
-       /* activity!!.supportFragmentManager.beginTransaction().replace(
-            R.id.main_2,
-            HomeFragment()
-        ).commit()*/
 
-        //updateUI(user)
         return lvdata
     }
 
@@ -478,7 +469,7 @@ class FirebaseSource {
 
                         liveData.value=true
                         progressDialog.dismiss()
-                     uploadprofileUrl(user_id,imageUrl)
+                         uploadprofileUrl(user_id,imageUrl)
                       //  activity!!.showToast("Signup Sucessfully")
                         // Toast.makeText(activity,"Signup Sucessfully",Toast.LENGTH_LONG).show()
                     }
@@ -509,7 +500,7 @@ class FirebaseSource {
     }
 
 
-    private fun uploadprofileUrl(userId: String, imageUrl: String): MutableLiveData<Boolean> {
+     fun uploadprofileUrl(userId: String, imageUrl: String): MutableLiveData<Boolean> {
         var liveData=MutableLiveData<Boolean>()
         var reference=firebaseStorageInstance.getReference("UsersProfile").child(userId)
         reference.setValue(imageUrl).addOnSuccessListener {
@@ -556,6 +547,11 @@ class FirebaseSource {
         }
         return liveData
     }
+
+
+
+
+
 
 
 }

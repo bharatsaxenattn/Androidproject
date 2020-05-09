@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/baseBackground"
+    tools:context=".view.ui.profile.Profile">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:background="@color/baseBackground"
     android:padding="8dp" >
 
     <ImageView
         android:id="@+id/profile_image"
-        android:layout_width="@dimen/_200dp"
-        android:layout_height="@dimen/_200dp"
+        android:layout_width="@dimen/_100dp"
+        android:layout_height="@dimen/_100dp"
         android:layout_marginTop="@dimen/_20dp"
+        android:src="@drawable/image"
         android:layout_gravity="center"/>
     <TextView
         android:id="@+id/profile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_50dp"
-
+        android:textSize="@dimen/_20dp"
+        android:fontFamily="cursive"
         android:gravity="center"/>
     <TextView
         android:id="@+id/profile_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#000"
+        android:textSize="@dimen/_20dp"
+        android:fontFamily="cursive"
       android:layout_marginTop="@dimen/_10dp"
         android:gravity="center"/>
 
@@ -41,3 +51,4 @@
         android:textColor="@android:color/white" />
 
 </LinearLayout>
+</FrameLayout>
