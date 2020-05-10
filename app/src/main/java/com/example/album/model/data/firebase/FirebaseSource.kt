@@ -491,7 +491,7 @@ class FirebaseSource {
 
 
                 } else {
-
+                        liveData.value=false
                     if(task.exception is FirebaseAuthUserCollisionException)
                     {
                        // Log.w(TAG, "The email address is already in use by another account.", task.exception)

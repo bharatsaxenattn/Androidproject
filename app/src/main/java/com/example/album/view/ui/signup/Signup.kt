@@ -98,6 +98,9 @@ lateinit var firebaseDatabase:FirebaseDatabase
                             })
 
                     }
+                    else{
+                        hideProgress()
+                    }
                 })
             }
             else
