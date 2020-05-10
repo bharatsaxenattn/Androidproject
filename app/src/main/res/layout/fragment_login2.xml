@@ -14,12 +14,20 @@
         android:orientation="vertical"
         android:background="@drawable/mainimage">
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_30dp"
+            android:text="Login"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:fontFamily="cursive"
+            android:layout_marginTop="@dimen/_30dp"/>
         <EditText
             android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="@dimen/_200dp"
+            android:layout_marginTop="150dp"
             android:layout_marginRight="@dimen/_20dp"
             android:layout_marginLeft="@dimen/_20dp"
             android:hint="@string/email"

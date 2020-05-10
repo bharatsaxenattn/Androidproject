@@ -32,11 +32,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         Log.v("onvack","exe")
+
+        val count = supportFragmentManager.backStackEntryCount
+        if(count==0)
+        {
             super.onBackPressed()
             val a = Intent(Intent.ACTION_MAIN)
             a.addCategory(Intent.CATEGORY_HOME)
             a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(a)
+        }
+        else{
+            supportFragmentManager.popBackStack()
+        }
+
+
 
     }
 

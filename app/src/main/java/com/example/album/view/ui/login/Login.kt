@@ -124,7 +124,7 @@ class Login : Fragment(), View.OnClickListener {
             manager.beginTransaction().replace(
                 R.id.main_screen,
                 Signup.newInstance()
-            ).commit()
+            ).addToBackStack(null).commit()
         }
         if (v?.id == R.id.g_signin) {
             gsignIn()

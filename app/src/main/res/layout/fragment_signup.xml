@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textStyle="italic|bold"
+            android:fontFamily="cursive"
             android:text="@string/signupHeading"
-            android:textSize="@dimen/_20dp"
+            android:textSize="@dimen/_30dp"
             android:gravity="center"
             android:layout_marginTop="@dimen/_30dp"/>
         <ImageView
