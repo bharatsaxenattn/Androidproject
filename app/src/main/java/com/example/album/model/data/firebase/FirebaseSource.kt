@@ -247,8 +247,10 @@ class FirebaseSource {
 
                 } else {
                     hideProgress()
-                   // progressDialog.dismiss()
-                   // Toast.makeText(context, "Invalid details", Toast.LENGTH_LONG).show()
+
+                   // progressDialog.dismiss()m
+                   Log.v("exception in login",task.exception.toString())
+                    Toast.makeText(context, "Invalid details "+task.exception!!.message, Toast.LENGTH_LONG).show()
                 }
             })
 
@@ -467,7 +469,6 @@ class FirebaseSource {
 
     fun signup(name:String,email: String,password:String ,imageUrl:String,activity:Activity): MutableLiveData<Boolean> {
         var liveData=MutableLiveData<Boolean>()
-       showProgress(activity)
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
@@ -480,16 +481,17 @@ class FirebaseSource {
                     reference.setValue(data).addOnSuccessListener {
 
                         liveData.value=true
-                        hideProgress()
+
                        // progressDialog.dismiss()
                          uploadprofileUrl(user_id,imageUrl)
+
                       //  activity!!.showToast("Signup Sucessfully")
                         // Toast.makeText(activity,"Signup Sucessfully",Toast.LENGTH_LONG).show()
                     }
 
 
                 } else {
-                    hideProgress()
+
                     if(task.exception is FirebaseAuthUserCollisionException)
                     {
                        // Log.w(TAG, "The email address is already in use by another account.", task.exception)
@@ -527,7 +529,6 @@ class FirebaseSource {
        var liveData=MutableLiveData<String>()
        var  mstorageReference:StorageReference=FirebaseStorage.getInstance().getReference().child(id)
 
-       showProgress(activity)
         val uplaod=mstorageReference.putFile(uri)
         uplaod.addOnCompleteListener { uplaodTask ->
             if (uplaodTask.isSuccessful) {
@@ -537,7 +538,8 @@ class FirebaseSource {
                        var path = it
                         uploadprofileUrl(id,path.toString())
                         liveData.value=path.toString()
-                        hideProgress()
+
+
 
 
 

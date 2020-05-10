@@ -93,31 +93,39 @@ class Login : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (v?.id == R.id.btn_sign_in) {
+            if(checkValidation()){
+                if(activity!!.isNetworkAvailable())
+                {
+                    var loginViewModel: LoginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+                    loginViewModel.login(
+                        edt_email.text.toString(),
+                        edt_password.text.toString(),
+                        this.context!!
+                    ).observe(activity!!
+                        , Observer {
+                            if (it) {
+                                activity!!.showToast("Signin")
+                                //Toast.makeText(context, "SignIn", Toast.LENGTH_LONG).show()
+                                val intent = Intent(context, GalleryActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                activity!!.showToast("Login failed")
+                            }
+                        })
 
-            if(activity!!.isNetworkAvailable())
-            {
-                var loginViewModel: LoginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-                loginViewModel.login(
-                    edt_email.text.toString(),
-                    edt_password.text.toString(),
-                    this.context!!
-                ).observe(activity!!
-                    , Observer {
-                        if (it) {
-                            activity!!.showToast("Signin")
-                            //Toast.makeText(context, "SignIn", Toast.LENGTH_LONG).show()
-                            val intent = Intent(context, GalleryActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            activity!!.showToast("Login failed")
-                        }
-                    })
-
+                }
+                else
+                {
+                    activity!!.showToast("Please connect to wifi or mobile network")
+                }
             }
             else
             {
-                activity!!.showToast("Please connect to wifi or mobile network")
+                activity!!.showToast("Please provide valid email and password")
             }
+
+
+
 
         }
         if (v?.id == R.id.signupTxt) {
@@ -130,6 +138,15 @@ class Login : Fragment(), View.OnClickListener {
             gsignIn()
         }
 
+    }
+
+    private fun checkValidation():Boolean {
+        if(edt_email.text.toString().length<1)
+            return false
+        else if (edt_password.text.length<1)
+            return false
+
+           return true
     }
 
 

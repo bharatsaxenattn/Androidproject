@@ -2,6 +2,7 @@ package  com.example.album.view.ui.signup
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.album.R
+import com.example.album.utils.CustomProgressBar
 import com.example.album.utils.isNetworkAvailable
 import com.example.album.utils.showToast
 import com.example.album.view.ui.login.Login
@@ -50,6 +52,7 @@ lateinit var firebaseDatabase:FirebaseDatabase
     var imageUrl:String=""
     var user_id=""
      var profileUri: Uri? =null
+    private var progressBar: CustomProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +62,16 @@ lateinit var firebaseDatabase:FirebaseDatabase
 
     }
 
+
+
+    open fun showProgress(context: Context) {
+        progressBar = CustomProgressBar()
+        progressBar!!.show(context)
+    }
+
+    open fun hideProgress() {
+        progressBar?.getDialog()?.dismiss()
+    }
     private fun updateUI() {
 
 
@@ -68,14 +81,18 @@ lateinit var firebaseDatabase:FirebaseDatabase
             var pass=edtPassword.text.toString()
             var signupViewModel: SignupViewModel = ViewModelProvider(this)[SignupViewModel::class.java]
 
+
             if(profileUri!=null)
             {
+                showProgress(activity!!)
                 signupViewModel.signup(name1,email,pass,imageUrl,it).observe(it, Observer {
                     Log.v("status",it.toString())
                     if (it)
                     {
+                        var id =FirebaseAuth.getInstance().currentUser!!.uid
                         signupViewModel.uploadImage(id.toString(), profileUri!!,activity!!).observe(activity!!,
                             Observer {
+                                hideProgress()
                                 activity!!.supportFragmentManager.beginTransaction().
                                 replace(R.id.signup_main, Login.newInstance()).commit()
                             })

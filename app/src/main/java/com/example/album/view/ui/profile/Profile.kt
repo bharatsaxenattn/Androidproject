@@ -65,7 +65,9 @@ class Profile : Fragment() {
         profileViewModel.profileImageUrl(id).observe(activity!!, Observer {
             Glide.with(this)
                 .load(it)
+                .error(R.drawable.image)
                 .into(profile_image)
+
             Log.v("profile image",it)
         })
 

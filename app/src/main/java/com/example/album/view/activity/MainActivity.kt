@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FirebaseSource().getFirebaseUser(applicationContext)
+        fragmentManager=supportFragmentManager
+        fragmentManager.beginTransaction().add(R.id.main_layout, Login.newInstance()).commit()
 
 
 
@@ -23,8 +25,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        fragmentManager=supportFragmentManager
-        fragmentManager.beginTransaction().add(R.id.main_layout, Login.newInstance()).commit()
+
+       // fragmentManager.beginTransaction().add(R.id.main_layout, Login.newInstance()).commit()
         Log.v("OnResume","MainActivity")
         val count = supportFragmentManager.backStackEntryCount
         Log.v("MainActivityBackStaack",count.toString())

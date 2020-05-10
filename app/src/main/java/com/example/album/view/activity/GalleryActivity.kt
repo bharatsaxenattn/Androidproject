@@ -196,7 +196,7 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             editor.commit()
             FirebaseAuth.getInstance().signOut();
 
-            supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, Login.newInstance()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.main_2, Login.newInstance()).commit()
             if(Constant.type==Constant.TYPE.BOTTOM)
             {
                 bottomNavigationView.visibility=View.GONE
