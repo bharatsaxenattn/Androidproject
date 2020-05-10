@@ -122,7 +122,9 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         var tv_email: TextView = navHeaderView.findViewById(R.id.nav_email)
 
         var profileViewModel: ProfileViewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
-        profileViewModel.profileImageUrl(user_id!!).observe(this, Observer {
+        val id= FirebaseAuth.getInstance().currentUser!!.uid!!
+        Log.v("id===",id.toString())
+        profileViewModel.profileImageUrl(id).observe(this, Observer {
             Glide.with(this)
                 .load(it)
                 .into(imgvw)
@@ -168,7 +170,7 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         if (id == R.id.nav_home) {
             toolbar.setTitle("Collections")
 
-            tran.beginTransaction().replace(R.id.nav_host_fragment, HomeFragment()).addToBackStack(null)
+            tran.beginTransaction().replace(R.id.main_2, HomeFragment()).addToBackStack(null)
                 .commit()
 
         }
@@ -176,13 +178,13 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         /* if user selected timeline option*/
         if (id == R.id.timeline) {
             toolbar.setTitle("Timeline")
-            tran.beginTransaction().replace(R.id.nav_host_fragment, TimelineFragment.newInstance()).addToBackStack(null)
+            tran.beginTransaction().replace(R.id.main_2, TimelineFragment.newInstance()).addToBackStack(null)
                 .commit()
         }
         /* if user selected timeline option*/
         if (id == R.id.nav_profile) {
             toolbar.setTitle("Profile")
-            tran.beginTransaction().add(R.id.nav_host_fragment, Profile.newInstance()).addToBackStack(null)
+            tran.beginTransaction().add(R.id.main_2, Profile.newInstance()).addToBackStack(null)
                 .commit()
         }
         /* if user selected logout option*/
@@ -194,7 +196,7 @@ class GalleryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             editor.commit()
             FirebaseAuth.getInstance().signOut();
 
-            supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, Login.newInstance()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.main_2, Login.newInstance()).commit()
             if(Constant.type==Constant.TYPE.BOTTOM)
             {
                 bottomNavigationView.visibility=View.GONE

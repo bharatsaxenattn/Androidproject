@@ -16,6 +16,7 @@ import com.example.album.view.activity.GalleryActivity
 import com.example.album.model.data.pojo.ImageData
 import com.example.album.model.data.pojo.CategoryData
 import com.example.album.model.data.pojo.ProfileData
+import com.example.album.utils.CustomProgressBar
 import com.example.album.utils.showToast
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
@@ -48,6 +49,17 @@ class FirebaseSource {
             context.getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         var fuser = sharedPreferences.getString("user_id", "")!!
         return fuser
+    }
+
+    private var progressBar: CustomProgressBar? = null
+
+    open fun showProgress(context: Context) {
+        progressBar = CustomProgressBar()
+        progressBar!!.show(context)
+    }
+
+    open fun hideProgress() {
+        progressBar?.getDialog()?.dismiss()
     }
 
     /* function used to retrive the data of the image*/
@@ -99,11 +111,12 @@ class FirebaseSource {
     fun uploadImage(path: String, child: String, context: Context, uri: Uri) {
 
         var uri1 = uri
-        val progressDialog = ProgressDialog(context)
+       /* val progressDialog = ProgressDialog(context)
         // Code for showing progressDialog while uploading
         progressDialog.setTitle("Uploading...");
         progressDialog.show();
-
+*/
+        showProgress(context)
         val text1 = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalTime.now()
         } else {
@@ -123,7 +136,8 @@ class FirebaseSource {
 
                         uri1 = it
                         // imageView_category.setImageBitmap(imageBitmap)
-                        progressDialog.dismiss()
+                        //progressDialog.dismiss()
+                        hideProgress()
                         Toast.makeText(
                             context,
                             "ImageUploaded sucessfully",
@@ -144,11 +158,10 @@ class FirebaseSource {
                 }
             } else {
                 uplaodTask.exception?.let {
-                    progressDialog.dismiss()
+                   // progressDialog.dismiss()
+                    hideProgress()
                     context!!.showToast("ImageUploaded failed")
-                   // Toast.makeText(context, "ImageUploaded failed", Toast.LENGTH_SHORT).show()
 
-                    // Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     var intent = Intent(context, GalleryActivity::class.java)
                     context.startActivity(intent)
                 }
@@ -189,10 +202,8 @@ class FirebaseSource {
     fun checkRegisteredEmailValidation(email: String, password: String, context: Context): MutableLiveData<Boolean> {
         //firebaseAuth= FirebaseAuth.getInstance()
         var lvdata=MutableLiveData<Boolean>()
-        val progressDialog = ProgressDialog(context)
-        // Code for showing progressDialog while uploading
-        progressDialog.setTitle("Please wait...");
-        progressDialog.show();
+        showProgress(context)
+
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -217,12 +228,14 @@ class FirebaseSource {
                             editor.apply()
                             editor.commit()
                             editor.commit()
-                            progressDialog.dismiss()
+                           // progressDialog.dismiss()
+                            hideProgress()
 
                         }
 
                         override fun onCancelled(p0: DatabaseError) {
-                            progressDialog.dismiss()
+                           // progressDialog.dismiss()
+                            hideProgress()
                             Toast.makeText(context, "Error occur!!", Toast.LENGTH_LONG).show()
                         }
                     })
@@ -233,7 +246,8 @@ class FirebaseSource {
                     Log.v("currentUser", fUser.uid + "")
 
                 } else {
-                    progressDialog.dismiss()
+                    hideProgress()
+                   // progressDialog.dismiss()
                    // Toast.makeText(context, "Invalid details", Toast.LENGTH_LONG).show()
                 }
             })
@@ -390,10 +404,8 @@ class FirebaseSource {
          var a=MutableLiveData<Boolean>()
         var uri=uri
         if (uri != null) {
-            var progressDialog = ProgressDialog(context)
-            // Code for showing progressDialog while uploading
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
+            showProgress(context)
+
             val baos = ByteArrayOutputStream()
             var s = FirebaseSource().getFirebaseUser(context!!.applicationContext)
             val storafgeRef = FirebaseStorage.getInstance()
@@ -408,7 +420,9 @@ class FirebaseSource {
 
                             var imageUrl = uri.toString()
                             // imageView_category.setImageBitmap(imageBitmap)
-                            progressDialog.dismiss()
+
+                            hideProgress()
+                           // progressDialog.dismiss()
                             context.showToast("ImageUploaded Sucessfully")
                             Log.v("path==", uri.toString())
                             uploadCategoryImageUrl(imageUrl,titletxt,s)
@@ -419,7 +433,8 @@ class FirebaseSource {
                     }
                 } else {
                     uplaodTask.exception?.let {
-                        progressDialog.dismiss()
+                        hideProgress()
+                      //  progressDialog.dismiss()
                         a.value=false
                         context.showToast("ImageUploaded failed")
 
@@ -452,10 +467,7 @@ class FirebaseSource {
 
     fun signup(name:String,email: String,password:String ,imageUrl:String,activity:Activity): MutableLiveData<Boolean> {
         var liveData=MutableLiveData<Boolean>()
-        var progressDialog= ProgressDialog(activity)
-        // Code for showing progressDialog while uploading
-        progressDialog.setTitle("Uploading...");
-        progressDialog.show();
+       showProgress(activity)
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
@@ -468,20 +480,20 @@ class FirebaseSource {
                     reference.setValue(data).addOnSuccessListener {
 
                         liveData.value=true
-                        progressDialog.dismiss()
+                        hideProgress()
+                       // progressDialog.dismiss()
                          uploadprofileUrl(user_id,imageUrl)
                       //  activity!!.showToast("Signup Sucessfully")
                         // Toast.makeText(activity,"Signup Sucessfully",Toast.LENGTH_LONG).show()
                     }
 
-                   /* activity!!.supportFragmentManager.beginTransaction().
-                    replace(R.id.signup_main, Login.newInstance()).commit()*/
-                    //updateUI(user)
-                } else {
 
+                } else {
+                    hideProgress()
                     if(task.exception is FirebaseAuthUserCollisionException)
                     {
                        // Log.w(TAG, "The email address is already in use by another account.", task.exception)
+
                         activity!!.showToast("The email address is already in use by another account.")
 
                     }
@@ -515,31 +527,25 @@ class FirebaseSource {
        var liveData=MutableLiveData<String>()
        var  mstorageReference:StorageReference=FirebaseStorage.getInstance().getReference().child(id)
 
-        var progressDialog= ProgressDialog(activity)
-        // Code for showing progressDialog while uploading
-        progressDialog.setTitle("Uploading...");
-        progressDialog.show();
+       showProgress(activity)
         val uplaod=mstorageReference.putFile(uri)
         uplaod.addOnCompleteListener { uplaodTask ->
             if (uplaodTask.isSuccessful) {
                 mstorageReference.downloadUrl.addOnCompleteListener { urlTask ->
                     urlTask.result?.let {
+
                        var path = it
+                        uploadprofileUrl(id,path.toString())
                         liveData.value=path.toString()
-                      //  imageUrl=uri.toString()
-                        // imageView_category.setImageBitmap(imageBitmap)
-                        progressDialog.dismiss()
-                       // activity.showToast("Image Uploaded sucessfully")
-                       // Toast.makeText(activity,"ImageUploaded sucessfully", Toast.LENGTH_SHORT).show()
-                        Log.v("path==", path.toString())
-                        // uploadImageUrl()
+                        hideProgress()
+
 
 
                     }
                 }
             } else {
                 uplaodTask.exception?.let {
-                    progressDialog.dismiss()
+                    hideProgress()
                     activity!!.showToast("ImageUploaded failed")
 
                 }

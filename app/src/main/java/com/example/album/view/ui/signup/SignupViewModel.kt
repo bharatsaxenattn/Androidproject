@@ -22,4 +22,9 @@ class SignupViewModel :ViewModel()
         var data=repository.uploadProfileImage(id,uri,activity)
         return data
     }
+
+    fun updateProfileUrl(userid:String,imageUrl:String): MutableLiveData<Boolean> {
+        var data=repository.uploadProfileUrl(userid,imageUrl)
+        return data
+    }
 }
