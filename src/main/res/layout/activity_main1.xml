@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="main_data"
+            type="com.bharat.retrofitpractice.model.DataModel" />
+        <variable
+            name="system"
+            type="com.bharat.retrofitpractice.model.SystemModel" />
+        <variable
+            name="weather_main"
+            type="com.bharat.retrofitpractice.model.WeatherMainModel" />
+        <variable
+            name="weather_desc"
+            type="com.bharat.retrofitpractice.model.WeatherModelData" />
+    </data>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:scaleType="centerCrop"
+            app:lottie_fileName="atom.json"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight=".5">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:text="@{main_data.time}"
+                android:layout_marginTop="5dp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/place"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@{main_data.name}"
+                android:textSize="15dp"
+                android:gravity="right" />
+
+        </LinearLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="weather1.json"
+            app:lottie_loop="true"
+           />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@{weather_desc.main}"
+           />
+        <TextView
+            android:id="@+id/temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/margin_50dp"
+            android:text="@{ weather_main.temp+` K`}"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/margin_20dp"/>
+        <TextView
+            android:id="@+id/main_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="@{ weather_main.temp_max+` K`+ ` - `+ weather_main.temp_min+` K` }"
+            android:layout_marginTop="@dimen/margin_10dp"/>
+
+        <TextView
+            android:id="@+id/others"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:text="@{ `humidity : `+weather_main.humidity+ `  pressure : `+ weather_main.pressure }"
+            android:layout_marginTop="@dimen/margin_10dp"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+</layout>
